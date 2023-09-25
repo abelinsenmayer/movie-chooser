@@ -2,3 +2,15 @@ html, body {
     height: 100%;
     text-align: center;
 }
+
+.form-check {
+    display: inline-block;
+    margin: 0 0.5em;
+}
+
+.selection-box {
+    border: 1px solid black;
+    margin: 0.5em 0.5em;
+    padding: 1.0em 0.3em;
+    border-radius: 1.0em;
+}
