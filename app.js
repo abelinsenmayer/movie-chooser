@@ -34,3 +34,6 @@ platformForm.addEventListener('submit', (e) => {
 
 
 // Movies API
+const apiKey = "TODO"
+
+
