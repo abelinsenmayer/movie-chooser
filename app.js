@@ -1,5 +1,3 @@
-// TODO capture input from all forms and print it out when you submit the form
-
 // Query forms
 const dateForm = document.querySelector('#date-form');
 const platformForm = document.querySelector('#platform-form');
@@ -32,8 +30,9 @@ platformForm.addEventListener('submit', (e) => {
     // }
 });
 
+// Get all genres
+// console.dir(getGenres())
 
-// Movies API
-const apiKey = "TODO"
+
 
 
