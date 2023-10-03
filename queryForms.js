@@ -14,7 +14,7 @@ class QueryForm {
         formCheck.classList.add('form-check');
 
 
-        const checkbox = document.createElement('div');
+        const checkbox = document.createElement('input');
         checkbox.id = id;
         checkbox.classList.add('form-check-input');
         checkbox.setAttribute('type', 'checkbox');
