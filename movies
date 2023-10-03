@@ -1,0 +1,27 @@
+const axios = require('axios');
+
+const MOVIES_API_URL = 'https://streaming-availability.p.rapidapi.com'
+const MOVIES_API_HOST = 'streaming-availability.p.rapidapi.com'
+const RAPID_API_HEADER = '';
+const RAPID_API_HOST_HEADER = '';
+const API_KEY = '3976eeffddmshdeb86bef049e3fbp1f8653jsn74dffae4c0d0';
+
+/**
+ * Get all generes avaiable for querying.
+ */
+exports.getGenres = () => {
+    return makeRequest('genres', axios.method.get)
+}
+
+async function makeRequest(path, method) {
+    const options = {
+        method: method,
+        url: `${MOVIES_API_URL}/${path}`,
+        headers: {
+            'X-RapidAPI-Key': API_KEY,
+            'X-RapidAPI-Host': MOVIES_API_HOST
+        }
+      };
+    
+    return await axios.request(options)
+}
