@@ -10,14 +10,47 @@ const methods = {
     delete: 'DELETE'
 };
 
+
 /**
  * Get all generes avaiable for querying.
  */
 async function getGenres() {
-    return (await makeRequest('genres', methods.get)).data.result
+    return Object.values((await makeRequest('genres', methods.get)).data.result);
 }
 
-async function makeRequest(path, method) {
+/**
+ * Gets all streaming services available in the US.
+ */
+async function getServices() {
+    return Object.keys((await makeRequest('countries', methods.get)).data.result.us.services);
+}
+
+/**
+ * Search movies database using the supplied criteria.
+ * 
+ * @param {*} services Array of streaming services.
+ * @param {*} genres Array of genres.
+ * @param {*} year_min Minimum year to search by.
+ * @param {*} year_max Maximum year to search by.
+ * @param {*} cursor Cursor for pagination.
+ * @returns 
+ */
+async function searchMoviesByFilters(services=[], genres=[], year_min=null, year_max=null, cursor=null) {
+    const params = {
+        show_type: 'movie',
+        country: 'us'
+    };
+    params.services = services.length != 0 ? services.join() : (await getServices()).join();
+    params.genres = genres.length != 0 ? genres.join() : (await getGenres()).join();
+    year_max && (params.year_max = year_max);
+    year_min && (params.year_min = year_min);
+    cursor && (params.cursor = cursor);
+    console.log(params)
+
+    return (await makeRequest('search/filters', methods.get, params));
+}
+
+async function makeRequest(path, method, params=null) {
     const options = {
         method: method,
         url: `${MOVIES_API_URL}/${path}`,
@@ -26,6 +59,9 @@ async function makeRequest(path, method) {
             'X-RapidAPI-Host': MOVIES_API_HOST
         }
       };
+      if (params) {
+        options['params'] = params;
+      }
     
-    return await axios.request(options)
+    return await axios.request(options);
 }

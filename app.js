@@ -1,13 +1,22 @@
+// Initialize forms
 const genreForm = new QueryForm("genre-form", document.querySelector('#genre-selection'))
 let genres = null;
-getGenres().then((genres) => {
+getGenres().then((result) => {
     // only take the first 10 generes, with the option to show more later
-    const values = Object.values(genres);
-    genres = values;
-    for(const v of values.slice(0, 10)) {
+    genres = result;
+    for(const v of result.slice(0, 10)) {
         genreForm.addOption(v, true);
     }
 });
+
+// Form submission button
+const submitQueryButton = document.querySelector('#submit-button');
+submitQueryButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    genreForm.submit();
+});
+
+
 
 
 
@@ -24,19 +33,6 @@ getGenres().then((genres) => {
 //     option.innerText = name;
 //     option.id = `${name}`.toLowerCase();
 // }
-
-
-
-
-
-// class QueryOption {
-//     constructor(name, id) {
-//         this.name = name;
-//         this.id = id;
-//         this.element = document.createElement()
-//     }
-// }
-
 
 
 

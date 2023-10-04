@@ -32,11 +32,13 @@ class QueryForm {
     }
 
     submit() {
-        // TODO
-        console.log("NOT YET IMPLEMENTED");
+        console.log(`SUBMITTING ${this.name} FORM`)
+        searchMoviesByFilters(genres=this.getValues()).then((result) => {
+            console.log(result);
+        });
     }
 
     getValues() {
-        // TODO get all options' values
+        return this.options.filter((opt) => opt.checked).map((opt) => opt.value);
     }
 }
