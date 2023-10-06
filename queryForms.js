@@ -7,7 +7,7 @@ class QueryForm {
         this.options = [];
     }
 
-    addOption(name, checked) {
+    addOption(name, value, checked) {
         const id = name.toLowerCase();
 
         const formCheck = document.createElement('div');
@@ -18,7 +18,7 @@ class QueryForm {
         checkbox.id = id;
         checkbox.classList.add('form-check-input');
         checkbox.setAttribute('type', 'checkbox');
-        checkbox.setAttribute('value', id);
+        checkbox.setAttribute('value', value);
         checkbox.checked = checked;
 
         const label = document.createElement('label');
@@ -29,13 +29,6 @@ class QueryForm {
         this.parent.append(formCheck)
         formCheck.append(checkbox, label)
         this.options.push(checkbox);
-    }
-
-    submit() {
-        console.log(`SUBMITTING ${this.name} FORM`)
-        searchMoviesByFilters(genres=this.getValues()).then((result) => {
-            console.log(result);
-        });
     }
 
     getValues() {

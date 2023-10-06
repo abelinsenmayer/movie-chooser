@@ -2,7 +2,6 @@ const MOVIES_API_URL = 'https://streaming-availability.p.rapidapi.com'
 const MOVIES_API_HOST = 'streaming-availability.p.rapidapi.com'
 const RAPID_API_HEADER = '';
 const RAPID_API_HOST_HEADER = '';
-const API_KEY = '3976eeffddmshdeb86bef049e3fbp1f8653jsn74dffae4c0d0';
 const methods = {
     get: 'GET',
     post: 'POST',
@@ -13,13 +12,17 @@ const methods = {
 
 /**
  * Get all generes avaiable for querying.
+ * 
+ * @return A map of genre ID to names
  */
 async function getGenres() {
-    return Object.values((await makeRequest('genres', methods.get)).data.result);
+    return (await makeRequest('genres', methods.get)).data.result;
 }
 
 /**
  * Gets all streaming services available in the US.
+ * 
+ * @return An array of service names.
  */
 async function getServices() {
     return Object.keys((await makeRequest('countries', methods.get)).data.result.us.services);
@@ -35,17 +38,19 @@ async function getServices() {
  * @param {*} cursor Cursor for pagination.
  * @returns 
  */
-async function searchMoviesByFilters(services=[], genres=[], year_min=null, year_max=null, cursor=null) {
+async function searchMoviesByFilters({services=[], genres=[], year_min=null, year_max=null, cursor=null} = {}) {
     const params = {
         show_type: 'movie',
-        country: 'us'
+        country: 'us',
+        genres_relation: 'or',
+        order_by: 'popularity_alltime',
+        desc: 'true'
     };
     params.services = services.length != 0 ? services.join() : (await getServices()).join();
-    params.genres = genres.length != 0 ? genres.join() : (await getGenres()).join();
+    params.genres = genres.length != 0 ? genres.join() : Object.keys(await getGenres()).join();
     year_max && (params.year_max = year_max);
     year_min && (params.year_min = year_min);
     cursor && (params.cursor = cursor);
-    console.log(params)
 
     return (await makeRequest('search/filters', methods.get, params));
 }
