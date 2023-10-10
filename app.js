@@ -1,5 +1,6 @@
 // HTML elements
-const genreForm = new QueryForm("genres", document.querySelector('#genre-selection'))
+const genreForm = new QueryForm("genres", document.querySelector('#genre-selection'));
+const serviceForm = new QueryForm("services", document.querySelector('#platform-selection'));
 const submitQueryButton = document.querySelector('#submit-button');
 // API-populated variabels
 let genres = null;
@@ -28,7 +29,11 @@ function populateForms() {
     });
 
     // Services form
-    // TODO
+    getServices().then((result) => {
+        for (const [key, value] of Object.entries(result)) {
+            serviceForm.addOption(value.name, value.id, true);
+        }
+    });
 }
 
 /**
@@ -49,7 +54,8 @@ init();
 function submitMovieSearch() {
     // Convert genre names to IDs
     const genres = genreForm.getValues();
-    searchMoviesByFilters({ genres: genres }).then((output) => {
+    const services = serviceForm.getValues();
+    searchMoviesByFilters({ genres: genres, services: services }).then((output) => {
         const nextCursor = output.data.nextCursor;
         const result = output.data.result;
         console.log(result)
@@ -61,50 +67,6 @@ submitQueryButton.addEventListener('click', (e) => {
     e.preventDefault();
     submitMovieSearch();
 });
-
-
-
-
-// const dateForm = document.querySelector('#date-form');
-// const genreForm = document.querySelector('#genre-form')
-// const platformForm = document.querySelector('#platform-form');
-// const submitQueryButton = document.querySelector('#submit-button');
-
-// // Popoulate forms with data from API requests
-// function addGenre(name) {
-//     const option = document.createElement('div');
-//     option.innerText = name;
-//     option.id = `${name}`.toLowerCase();
-// }
-
-
-
-// Query values
-// let platforms = null;
-// let dates = null;
-// let ratings = null;
-// // let genres = null;
-
-// // Form submission button listener
-// submitQueryButton.addEventListener('click', (e) => {
-//     platformForm.requestSubmit();
-//     dateForm.requestSubmit();
-// });
-
-// // Form submission listeners
-// dateForm.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     // for(elt of dateForm) {
-//     //     console.dir(elt.value)
-//     // }
-// });
-
-// platformForm.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     // for(elt of platformForm) {
-//     //     console.dir(elt.value)
-//     // }
-// });
 
 
 

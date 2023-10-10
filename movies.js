@@ -25,7 +25,7 @@ async function getGenres() {
  * @return An array of service names.
  */
 async function getServices() {
-    return Object.keys((await makeRequest('countries', methods.get)).data.result.us.services);
+    return (await makeRequest('countries', methods.get)).data.result.us.services;
 }
 
 /**
@@ -46,7 +46,7 @@ async function searchMoviesByFilters({services=[], genres=[], year_min=null, yea
         order_by: 'popularity_alltime',
         desc: 'true'
     };
-    params.services = services.length != 0 ? services.join() : (await getServices()).join();
+    params.services = services.length != 0 ? services.join() : Object.keys(await getServices()).join();
     params.genres = genres.length != 0 ? genres.join() : Object.keys(await getGenres()).join();
     year_max && (params.year_max = year_max);
     year_min && (params.year_min = year_min);

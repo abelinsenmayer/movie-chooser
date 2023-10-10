@@ -8,14 +8,12 @@ class QueryForm {
     }
 
     addOption(name, value, checked) {
-        const id = name.toLowerCase();
-
         const formCheck = document.createElement('div');
         formCheck.classList.add('form-check');
 
 
         const checkbox = document.createElement('input');
-        checkbox.id = id;
+        checkbox.id = value;
         checkbox.classList.add('form-check-input');
         checkbox.setAttribute('type', 'checkbox');
         checkbox.setAttribute('value', value);
@@ -23,7 +21,7 @@ class QueryForm {
 
         const label = document.createElement('label');
         label.classList.add('form-check-label');
-        label.setAttribute('for', id);
+        label.setAttribute('for', value);
         label.innerText = name;
 
         this.parent.append(formCheck)
