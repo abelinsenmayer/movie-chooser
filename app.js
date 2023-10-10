@@ -1,6 +1,8 @@
 // HTML elements
 const genreForm = new QueryForm("genres", document.querySelector('#genre-selection'));
 const serviceForm = new QueryForm("services", document.querySelector('#platform-selection'));
+const yearMinField = document.querySelector('#start-year');
+const yearMaxField = document.querySelector('#end-year');
 const submitQueryButton = document.querySelector('#submit-button');
 // API-populated variabels
 let genres = null;
@@ -55,7 +57,9 @@ function submitMovieSearch() {
     // Convert genre names to IDs
     const genres = genreForm.getValues();
     const services = serviceForm.getValues();
-    searchMoviesByFilters({ genres: genres, services: services }).then((output) => {
+    const yearMin = yearMinField.value;
+    const yearMax = yearMaxField.value;
+    searchMoviesByFilters({ genres: genres, services: services, year_min: yearMin, year_max: yearMax }).then((output) => {
         const nextCursor = output.data.nextCursor;
         const result = output.data.result;
         console.log(result)

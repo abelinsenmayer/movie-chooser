@@ -3,7 +3,11 @@ html, body {
     text-align: center;
 }
 
-.form-check {
+.form-control {
+    max-width: 3.7em;
+}
+
+.form-check, .form-control {
     display: inline-block;
     margin: 0 0.5em;
 }

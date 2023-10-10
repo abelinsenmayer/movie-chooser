@@ -27,7 +27,12 @@
             </section>
             <section id="date-selection" class="px-0 col selection-box">
                 <h2>Dates</h2>
-                <form id="date-form"></form>
+                <form id="date-form">
+                    <label for="start-year">Search between</label>
+                    <input type="number" class="form-control" id="start-year" min="1900" max="2050" placeholder="YYYY" value="1950">
+                    <label for="end-year">and</label>
+                    <input type="number" class="form-control" id="end-year" min="1900" max="2050" placeholder="YYYY" value="2023">
+                </form>
             </section>
         </div>
         <div class="row no-gutters">
